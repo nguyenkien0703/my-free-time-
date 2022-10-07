@@ -31,21 +31,40 @@ void solve(){
     cin >> n>>k;
     ll sum = 0;
     ll a[n + 10];
+    int chiahetchok=0;
     for (int i = 0; i < n;i++){
         cin >> a[i];
+        if(a[i]%k==0){
+            ++chiahetchok;
+        }
         sum+=a[i];
     }
-    ll ans = -1e9;
     if(sum%k!=0){
-        ans = fmax(ans, n);
+        cout<< n;
+        return;
     }
-    for (int i = 0; i < n;i++){
-        if(a[i]%k!=0){
-            ans = fmax(ans, i);
-            ans = fmax(ans, n-1-i);
+    if(chiahetchok==n){
+        cout << -1;
+        return;
+    }
+
+    ll total = sum;
+    ll max_length = 0;
+    for (int i= 0; i < n;i++){
+        total -= a[i];
+        if(total%k!=0){
+            max_length = fmax(max_length, n - i - 1);
+            break;
         }
     }
-    cout << (ans == -1e9 ? -1 : ans);
+    total = sum;
+    for (int i = n - 1; i >= 0;i--){
+        total -= a[i];
+        if(total%k!=0){
+            max_length =fmax(max_length,i);
+        }
+    }
+    cout << max_length;
     el;
 }
 int main()
